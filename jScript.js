@@ -28,14 +28,14 @@ let cChoice;
                 return roundResult;
             }
             function game() {
-                for (let i = 0; i < 5; i++) {
+                
                     let playerSelection = getPlayerChoice();
                     let computerSelection = getComputerChoice();
                     
                     console.log(playRound(playerSelection, computerSelection));
                     if (roundResult == "Player Win") {playerScore++;}
                     else if (roundResult == "Computer Win") {computerScore++;}
-                }
+                
                 if (playerScore > computerScore) {alert("You won the game!");}
                 else if (playerScore < computerScore) {alert("You lose");}
                 else if (playerScore == computerScore) {alert("Tie game");}
