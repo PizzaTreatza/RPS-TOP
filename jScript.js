@@ -40,4 +40,3 @@ let cChoice;
                 else if (playerScore < computerScore) {alert("You lose");}
                 else if (playerScore == computerScore) {alert("Tie game");}
             }
-            game();
