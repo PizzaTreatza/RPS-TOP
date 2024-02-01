@@ -13,22 +13,12 @@
 
             function getComputerChoice() {
                 cChoice = Math.floor((Math.random()*3)+1);
-                switch (cChoice) {
-                    case 1:
-                        return ("rock")
-                        break;
-                    case 2:
-                        return ("paper")
-                        break;
-                    case 3:
-                        return ("scissors")
-                        break;
-                }
-  //              if (cChoice == 1) {cChoice = "rock";}
-   //             else if (cChoice == 2) {cChoice = "paper";}
-   //             else {cChoice = "scissors";}
-    //            return cChoice;
+                if (cChoice == 1) {cChoice = "rock";}
+                else if (cChoice == 2) {cChoice = "paper";}
+                else {cChoice = "scissors";}
+                return cChoice;
             }
+            //Not used with buttons
             function getPlayerChoice() {
                 pChoice = prompt("Rock, Paper, Scissors?");
                 pChoice = pChoice.toLowerCase();
@@ -46,67 +36,43 @@
                 scoreOutput.textContent = roundResult;
                 return roundResult;
             }
+            function gameCheck () {
+                if (playerScore == 5 || computerScore == 5) {
+                    playerScore = 0;
+                    computerScore = 0;
+                    pScore.textContent = playerScore;
+                    cScore.textContent = computerScore;
+                }
+            }
             function whoWon(playerScore, computerScore) {
-                if (playerScore > computerScore) {console.log("You won the game!");}
-                    else if (playerScore < computerScore) {console.log("You lose");}
-                    else if (playerScore == computerScore) {console.log("Tie game");};
+                if (playerScore > computerScore) {scoreOutput.textContent = "You won the game!";}
+                    else if (playerScore < computerScore) {scoreOutput.textContent = "You lose";}
+                    else if (playerScore == computerScore) {scoreOutput.textContent = "Tie game";};
             }
+            function gameButton(chooseButton) {
 
+                //Get the comp choice, set the user choice based on click
+                let computerSelection = getComputerChoice();
+                let playerSelection = chooseButton;
 
-            // START GAME
-            function game() {
+                //Check to see if game has already concluded. If so, reset and continue.
+                gameCheck();
 
-                    let playerSelection = getPlayerChoice();
-                    let computerSelection = getComputerChoice();
-                    
-                    console.log(playRound(playerSelection, computerSelection));
-                    if (roundResult == "Player Win") {playerScore++;}
-                    else if (roundResult == "Computer Win") {computerScore++;}
+                //Play the round, iterating scores.
+                playRound(playerSelection, computerSelection);
+                    if (roundResult == "Player Win") {playerScore++; pScore.textContent = playerScore;}
+                    else if (roundResult == "Computer Win") {computerScore++; cScore.textContent = computerScore;}
                 
-                if (playerScore > computerScore) {alert("You won the game!");}
-                else if (playerScore < computerScore) {alert("You lose");}
-                else if (playerScore == computerScore) {alert("Tie game");}
-            }
+                //If one player has reached 5, state the winner.    
+                if (playerScore == 5 || computerScore == 5) { whoWon (playerScore, computerScore);} 
+                 };
+
 
             const rButton = document.querySelector('.rBtn');
-            rButton.addEventListener('click', function (e) {
-
-                let computerSelection = getComputerChoice();
-                let playerSelection = "rock"
-
-                console.log(playRound(playerSelection, computerSelection));
-                    if (roundResult == "Player Win") {playerScore++; pScore.textContent = playerScore;}
-                    else if (roundResult == "Computer Win") {computerScore++; cScore.textContent = computerScore;}
-                
-                if (playerScore >= 5 || computerScore >= 5) { whoWon (playerScore, computerScore);} 
-                 });
+            rButton.addEventListener('click', function(){gameButton("rock")});
 
             const pButton = document.querySelector('.pBtn');
-            pButton.addEventListener('click', function (e) {
-
-                let computerSelection = getComputerChoice();
-                let playerSelection = "paper"
-
-                console.log(playRound(playerSelection, computerSelection));
-                    if (roundResult == "Player Win") {playerScore++; pScore.textContent = playerScore;}
-                    else if (roundResult == "Computer Win") {computerScore++; cScore.textContent = computerScore;}
-                
-                if (playerScore > computerScore) {console.log("You won the game!");}
-                else if (playerScore < computerScore) {console.log("You lose");}
-                else if (playerScore == computerScore) {console.log("Tie game");};
-                 });
+            pButton.addEventListener('click', function(){gameButton("paper")});
 
             const sButton = document.querySelector('.sBtn');
-            sButton.addEventListener('click', function (e) {
-
-                let computerSelection = getComputerChoice();
-                let playerSelection = "scissors"
-
-                console.log(playRound(playerSelection, computerSelection));
-                    if (roundResult == "Player Win") {playerScore++; pScore.textContent = playerScore;}
-                    else if (roundResult == "Computer Win") {computerScore++; cScore.textContent = computerScore;}
-                
-                if (playerScore > computerScore) {console.log("You won the game!");}
-                else if (playerScore < computerScore) {console.log("You lose");}
-                else if (playerScore == computerScore) {console.log("Tie game");};
-                 });
+            sButton.addEventListener('click', function(){gameButton("scissors")});
